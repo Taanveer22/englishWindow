@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <!-- --------------------------- -->
+    <!-- HEADER SECTION START -->
+    <!-- ------------------------- -->
+    <header>
+      <!-- Navbar start-->
+      <nav>
+        <div class="navbar bg-base-100 shadow-sm">
+          <div class="navbar-start">
+            <div class="dropdown">
+              <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h8m-8 6h16"
+                  />
+                </svg>
+              </div>
+              <ul
+                tabindex="-1"
+                class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              >
+                <li><a href="#">Faq</a></li>
+                <li><a href="#">Learn</a></li>
+                <li><a href="#">Logout</a></li>
+              </ul>
+            </div>
+            <a class="btn btn-ghost text-xl">English <img src="./assets/logo.png" class="w-8"> Window</a>
+          </div>
+          <div class="navbar-end hidden sm:flex">
+            <ul class="menu menu-horizontal px-1 gap-3">
+              <li class="btn btn-sm btn-outline btn-primary">
+                <div class="flex items-center gap-1">
+                  <i class="fa-solid fa-circle-question"></i>
+                  <a href="#">Faq</a>
+                </div>
+              </li>
+              <li class="btn btn-sm btn-outline btn-primary">
+                <div class="flex items-center gap-1">
+                  <i class="fa-solid fa-book-open"></i>
+                  <a href="#">Learn</a>
+                </div>
+              </li>
+              <li class="btn btn-sm btn-outline btn-primary">
+                <div class="flex items-center gap-1">
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                  <a href="#">Logout</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- --------------------------- -->
+    <!-- MAIN SECTION START -->
+    <!-- ------------------------- -->
+    <main>
+      <section class="w-11/12 mx-auto flex flex-col-reverse lg:flex-row items-center">
+        <div class="flex-1 space-y-5">
+          <div class="">
+            <h1 class="text-2xl lg:text-5xl mb-3 font-bold"><span class="text-sky-400">English</span> is Easy</h1>
+            <p className="text-sm lg:text-2xl">
+              আজ থেকেই আপনার ভাষা শেখার যাত্রা শুরু করুন। আপনি যদি নতুন হন অথবা
+              আপনার দক্ষতা বাড়াতে চান, আমাদের Interactive Lessons আপনাকে নিয়ে
+              যাবে অন্য একটি Level এ
+            </p>
+          </div>
+          <div class="">
+            <fieldset
+              class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"
+            >
+              <input type="text" class="input" placeholder="Enter Your Name" />
+
+              <input
+                type="password"
+                class="input"
+                placeholder="Enter Your Password"
+              />
+
+              <button class="btn btn-primary mt-4 w-1/2">Get Started</button>
+            </fieldset>
+          </div>
+        </div>
+        <div class="flex-1">
+          <img src="./assets/hero-student.png" class="" />
+        </div>
+      </section>
+    </main>
+    <script src="./script.js"></script>
+  </body>
+</html>
