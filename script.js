@@ -47,6 +47,15 @@ const displayWords = (words) => {
   const wordsContainer = document.getElementById("words-container");
   // console.log(wordsContainer);
   wordsContainer.innerHTML = "";
+  if (words.length === 0) {
+    wordsContainer.innerHTML = `
+         <div class="col-span-3 mx-auto text-center">
+            <img src="./assets/alert-error.png" class="mx-auto">
+            <p class="text-sm lg:text-lg font-medium">এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি</p>
+            <h1 class="text-xl lg:text-2xl font-bold">Next Lesson এ যান</h1>
+          </div>
+    `;
+  }
   // 2. loop through every array
   words.forEach((oneWord) => {
     console.log(oneWord);
@@ -55,9 +64,9 @@ const displayWords = (words) => {
     div.innerHTML = ` 
         <div class="card bg-white rounded-xl">
           <div class="card-body items-center text-center">
-            <h2 class="card-title">${oneWord.word}</h2>
+            <h2 class="card-title">${oneWord.word || "No given word"}</h2>
             <p>Meaning / Pronounciation</p>
-            <h2 class="card-title">${oneWord.meaning} / ${oneWord.pronunciation}</h2>
+            <h2 class="card-title">${oneWord.meaning || "অর্থ পাওয়া যায়নি"} / ${oneWord.pronunciation || "উচ্চারণ পাওয়া যায়নি"}</h2>
             <div class="flex justify-between w-full">
               <i class="fa-solid fa-circle-info"></i>
               <i class="fa-solid fa-volume-high"></i>
