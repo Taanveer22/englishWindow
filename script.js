@@ -15,8 +15,17 @@ const arrayElements = (givenArray) => {
   return mappedElements.join(" ");
 };
 
-// const synonyms = ["abc", "kab", "dab"];
-// arrayElements(synonyms);
+// utility function 03
+const manageSpinner = (status) => {
+  // console.log(status);
+  if (status === true) {
+    document.getElementById("loading-spinner").classList.remove("hidden");
+    document.getElementById("words-container").classList.add("hidden");
+  } else {
+    document.getElementById("loading-spinner").classList.add("hidden");
+    document.getElementById("words-container").classList.remove("hidden");
+  }
+};
 
 // ======= load function 01 =========================
 const loadLessons = () => {
@@ -27,6 +36,8 @@ const loadLessons = () => {
 
 // ======= load function 02 =========================
 const loadWords = (id) => {
+  // loading spinner show
+  manageSpinner(true);
   const url = `https://openapi.programming-hero.com/api/level/${id}`;
   fetch(url)
     .then((res) => res.json())
@@ -50,6 +61,7 @@ const loadWordDetails = async (id) => {
 
 // ======= display function 01 =========================
 const displayLessons = (levels) => {
+  // console.log(levels);
   // 1. select the container and make innerHTML empty
   const lessonsContainer = document.getElementById("lessons-container");
   // console.log(lessonsContainer);
@@ -60,12 +72,12 @@ const displayLessons = (levels) => {
     // 3. create div element to keep data
     const div = document.createElement("div");
     div.innerHTML = `
-                <button onclick="loadWords(${oneLevel.level_no})"
-                        id="fixed-level-btn-${oneLevel.level_no}"
-                        class="common-level-btn flex items-center gap-1 btn btn-sm btn-outline btn-primary">
-                  <i class="fa-solid fa-book-open"></i>
-                  <p>lesson - ${oneLevel.level_no}</p>
-                </button>
+      <button onclick="loadWords(${oneLevel.level_no})"
+          id="fixed-level-btn-${oneLevel.level_no}"
+          class="common-level-btn flex items-center gap-1 btn btn-sm btn-outline btn-primary">
+              <i class="fa-solid fa-book-open"></i>
+              <p>lesson - ${oneLevel.level_no}</p>
+      </button>
               `;
 
     // Correctly attach the event listener
@@ -74,8 +86,6 @@ const displayLessons = (levels) => {
     // 4. append the container child elements
     lessonsContainer.appendChild(div);
   }
-
-  console.log(levels);
 };
 
 // ======= display function 02 =========================
@@ -87,11 +97,11 @@ const displayWords = (words) => {
   wordsContainer.innerHTML = "";
   if (words.length === 0) {
     wordsContainer.innerHTML = `
-         <div class="col-span-3 mx-auto text-center bangla-font">
+        <div class="col-span-3 mx-auto text-center bangla-font">
             <img src="./assets/alert-error.png" class="mx-auto">
             <p class="text-sm lg:text-lg font-medium">এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি</p>
             <h1 class="text-xl lg:text-2xl font-bold">Next Lesson এ যান</h1>
-          </div>
+        </div>
     `;
   }
   // 2. loop through every array
@@ -119,11 +129,13 @@ const displayWords = (words) => {
     // 4. append the container child elements
     wordsContainer.appendChild(div);
   });
+  // loading spinner hide
+  manageSpinner(false);
 };
 
 // ======= display function 03 =========================
 const displayWordDetails = (info) => {
-  console.log(info);
+  // console.log(info);
   const modalContainer = document.getElementById("modal-container");
   modalContainer.innerHTML = `
         <div class="card">
