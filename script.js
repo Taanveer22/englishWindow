@@ -29,7 +29,8 @@ const manageSpinner = (status) => {
 
 // ======= load function 01 =========================
 const loadLessons = () => {
-  fetch(`https://openapi.programming-hero.com/api/levels/all`)
+  const url1 = `https://openapi.programming-hero.com/api/levels/all`;
+  fetch(url1)
     .then((res) => res.json())
     .then((data) => displayLessons(data.data));
 };
@@ -38,8 +39,8 @@ const loadLessons = () => {
 const loadWords = (id) => {
   // loading spinner show
   manageSpinner(true);
-  const url = `https://openapi.programming-hero.com/api/level/${id}`;
-  fetch(url)
+  const url2 = `https://openapi.programming-hero.com/api/level/${id}`;
+  fetch(url2)
     .then((res) => res.json())
     .then((data) => {
       removeActiveClass();
@@ -52,8 +53,8 @@ const loadWords = (id) => {
 
 // ======= load function 03 =========================
 const loadWordDetails = async (id) => {
-  const url = `https://openapi.programming-hero.com/api/word/${id}`;
-  const res = await fetch(url);
+  const url3 = `https://openapi.programming-hero.com/api/word/${id}`;
+  const res = await fetch(url3);
   const data = await res.json();
   displayWordDetails(data.data);
   // console.log(data.data);
@@ -110,7 +111,7 @@ const displayWords = (words) => {
     // 3. create div element to keep data
     const div = document.createElement("div");
     div.innerHTML = ` 
-        <div class="card bg-white rounded-xl">
+        <div class="card bg-white rounded-xl h-48">
           <div class="card-body items-center text-center">
             <h2 class="card-title">${oneWord.word || "No given word"}</h2>
             <p>Meaning / Pronounciation</p>
@@ -143,11 +144,11 @@ const displayWordDetails = (info) => {
               <h2 class="card-title">
               ${info.word || "Not Given"} (${info.pronunciation || "পাওয়া যায়নি"})
               </h2>
-              <p class="text-lg font-medium">meaning</p>
+              <p class="font-medium">Meaning</p>
               <p>${info.meaning || "পাওয়া যায়নি"}</p>
-              <p class="text-lg font-medium">example</p>
+              <p class="font-medium">Example</p>
               <p>${info.sentence || "Not Given"}</p>
-              <p>সমার্থক শব্দ গুলো</p>
+              <p class="font-medium">Synonyms</p>
               <div>${arrayElements(info.synonyms)}</div>
             </div>
           </div>
@@ -155,6 +156,29 @@ const displayWordDetails = (info) => {
   `;
   document.getElementById("details_modal").showModal();
 };
+
+// search functionality implementation
+document.getElementById("search-btn").addEventListener("click", async () => {
+  // remove active btn when search
+  removeActiveClass();
+  // select the search input via dom
+  const searchInput = document
+    .getElementById("search-input")
+    .value.trim()
+    .toLowerCase();
+  // console.log(searchInput);
+  // fetch data from ui via async await
+  const url4 = `https://openapi.programming-hero.com/api/words/all`;
+  const res = await fetch(url4);
+  const data = await res.json();
+  // console.log(data.data);
+  const allWords = data.data;
+  const filteredWords = allWords.filter((item) =>
+    item.word.toLowerCase().includes(searchInput),
+  );
+  // console.log(filteredWords);
+  displayWords(filteredWords);
+});
 
 // load function call
 loadLessons();
