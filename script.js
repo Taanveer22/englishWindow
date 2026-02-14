@@ -1,5 +1,11 @@
 // console.log("connected");
 
+const removeActiveClass = () => {
+  const commonLevelButtons = document.querySelectorAll(".common-level-btn");
+  // console.log(commonLevelButtons);
+  commonLevelButtons.forEach((btn) => btn.classList.remove("active"));
+};
+
 const loadLessons = () => {
   fetch(`https://openapi.programming-hero.com/api/levels/all`)
     .then((res) => res.json())
@@ -10,7 +16,13 @@ const loadWords = (id) => {
   const url = `https://openapi.programming-hero.com/api/level/${id}`;
   fetch(url)
     .then((res) => res.json())
-    .then((data) => displayWords(data.data));
+    .then((data) => {
+      removeActiveClass();
+      const clickedBtn = document.getElementById(`fixed-level-btn-${id}`);
+      // console.log(clickedBtn);
+      clickedBtn.classList.add("active");
+      displayWords(data.data);
+    });
 };
 
 const displayLessons = (levels) => {
@@ -25,7 +37,8 @@ const displayLessons = (levels) => {
     const div = document.createElement("div");
     div.innerHTML = `
                 <button onclick="loadWords(${oneLevel.level_no})"
-                        class="flex items-center gap-1 btn btn-sm btn-outline btn-primary">
+                        id="fixed-level-btn-${oneLevel.level_no}"
+                        class="common-level-btn flex items-center gap-1 btn btn-sm btn-outline btn-primary">
                   <i class="fa-solid fa-book-open"></i>
                   <p>lesson - ${oneLevel.level_no}</p>
                 </button>
@@ -49,7 +62,7 @@ const displayWords = (words) => {
   wordsContainer.innerHTML = "";
   if (words.length === 0) {
     wordsContainer.innerHTML = `
-         <div class="col-span-3 mx-auto text-center">
+         <div class="col-span-3 mx-auto text-center bangla-font">
             <img src="./assets/alert-error.png" class="mx-auto">
             <p class="text-sm lg:text-lg font-medium">এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি</p>
             <h1 class="text-xl lg:text-2xl font-bold">Next Lesson এ যান</h1>
@@ -58,7 +71,7 @@ const displayWords = (words) => {
   }
   // 2. loop through every array
   words.forEach((oneWord) => {
-    console.log(oneWord);
+    // console.log(oneWord);
     // 3. create div element to keep data
     const div = document.createElement("div");
     div.innerHTML = ` 
