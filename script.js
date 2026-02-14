@@ -1,17 +1,31 @@
 // console.log("connected");
-
+// utility function 01
 const removeActiveClass = () => {
   const commonLevelButtons = document.querySelectorAll(".common-level-btn");
   // console.log(commonLevelButtons);
   commonLevelButtons.forEach((btn) => btn.classList.remove("active"));
 };
 
+// utility function 02
+const arrayElements = (givenArray) => {
+  // console.log(givenArray);
+  const mappedElements = givenArray.map(
+    (element) => `<span class="btn btn-xs btn-secondary">${element}</span>`,
+  );
+  return mappedElements.join(" ");
+};
+
+// const synonyms = ["abc", "kab", "dab"];
+// arrayElements(synonyms);
+
+// ======= load function 01 =========================
 const loadLessons = () => {
   fetch(`https://openapi.programming-hero.com/api/levels/all`)
     .then((res) => res.json())
     .then((data) => displayLessons(data.data));
 };
 
+// ======= load function 02 =========================
 const loadWords = (id) => {
   const url = `https://openapi.programming-hero.com/api/level/${id}`;
   fetch(url)
@@ -25,6 +39,16 @@ const loadWords = (id) => {
     });
 };
 
+// ======= load function 03 =========================
+const loadWordDetails = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/word/${id}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  displayWordDetails(data.data);
+  // console.log(data.data);
+};
+
+// ======= display function 01 =========================
 const displayLessons = (levels) => {
   // 1. select the container and make innerHTML empty
   const lessonsContainer = document.getElementById("lessons-container");
@@ -54,6 +78,7 @@ const displayLessons = (levels) => {
   console.log(levels);
 };
 
+// ======= display function 02 =========================
 const displayWords = (words) => {
   // console.log(words);
   // 1.  select the container and make innerHTML empty
@@ -81,8 +106,12 @@ const displayWords = (words) => {
             <p>Meaning / Pronounciation</p>
             <h2 class="card-title">${oneWord.meaning || "অর্থ পাওয়া যায়নি"} / ${oneWord.pronunciation || "উচ্চারণ পাওয়া যায়নি"}</h2>
             <div class="flex justify-between w-full">
-              <i class="fa-solid fa-circle-info"></i>
-              <i class="fa-solid fa-volume-high"></i>
+              <button onclick="loadWordDetails(${oneWord.id})"> 
+                <i class="fa-solid fa-circle-info"></i>
+              </button>
+              <button> 
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -92,4 +121,28 @@ const displayWords = (words) => {
   });
 };
 
+// ======= display function 03 =========================
+const displayWordDetails = (info) => {
+  console.log(info);
+  const modalContainer = document.getElementById("modal-container");
+  modalContainer.innerHTML = `
+        <div class="card">
+            <div class="card-body">
+              <h2 class="card-title">
+              ${info.word || "Not Given"} (${info.pronunciation || "পাওয়া যায়নি"})
+              </h2>
+              <p class="text-lg font-medium">meaning</p>
+              <p>${info.meaning || "পাওয়া যায়নি"}</p>
+              <p class="text-lg font-medium">example</p>
+              <p>${info.sentence || "Not Given"}</p>
+              <p>সমার্থক শব্দ গুলো</p>
+              <div>${arrayElements(info.synonyms)}</div>
+            </div>
+          </div>
+  
+  `;
+  document.getElementById("details_modal").showModal();
+};
+
+// load function call
 loadLessons();
