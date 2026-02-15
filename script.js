@@ -27,6 +27,13 @@ const manageSpinner = (status) => {
   }
 };
 
+// utility function 04
+function pronounceWord(word) {
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "en-EN"; // English
+  window.speechSynthesis.speak(utterance);
+}
+
 // ======= load function 01 =========================
 const loadLessons = () => {
   const url1 = `https://openapi.programming-hero.com/api/levels/all`;
@@ -60,7 +67,9 @@ const loadWordDetails = async (id) => {
   // console.log(data.data);
 };
 
+// ======================================================
 // ======= display function 01 =========================
+// ======================================================
 const displayLessons = (levels) => {
   // console.log(levels);
   // 1. select the container and make innerHTML empty
@@ -89,7 +98,9 @@ const displayLessons = (levels) => {
   }
 };
 
+// ======================================================
 // ======= display function 02 =========================
+// ======================================================
 const displayWords = (words) => {
   // console.log(words);
   // 1.  select the container and make innerHTML empty
@@ -120,7 +131,7 @@ const displayWords = (words) => {
               <button onclick="loadWordDetails(${oneWord.id})"> 
                 <i class="fa-solid fa-circle-info"></i>
               </button>
-              <button> 
+              <button onclick="pronounceWord('${oneWord.word}')"> 
                 <i class="fa-solid fa-volume-high"></i>
               </button>
             </div>
@@ -134,7 +145,9 @@ const displayWords = (words) => {
   manageSpinner(false);
 };
 
+// ======================================================
 // ======= display function 03 =========================
+// ======================================================
 const displayWordDetails = (info) => {
   // console.log(info);
   const modalContainer = document.getElementById("modal-container");
@@ -157,7 +170,7 @@ const displayWordDetails = (info) => {
   document.getElementById("details_modal").showModal();
 };
 
-// search functionality implementation
+// =============search functionality implementation=================
 document.getElementById("search-btn").addEventListener("click", async () => {
   // remove active btn when search
   removeActiveClass();
@@ -180,5 +193,5 @@ document.getElementById("search-btn").addEventListener("click", async () => {
   displayWords(filteredWords);
 });
 
-// load function call
+// ========load function call=========
 loadLessons();
